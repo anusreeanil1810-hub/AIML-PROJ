@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dropout Prediction</title>
+</head>
+<body>
+    <h2>Student Dropout Prediction</h2>
+
+    <form method="POST">
+        <label>Subjects passed in 2nd semester:</label><br>
+        <input type="number" name="Curricular units 2nd sem (approved)" required><br><br>
+
+        <label>Average grade in 2nd semester (0–20):</label><br>
+        <input type="number" step="0.1" name="Curricular units 2nd sem (grade)" required><br><br>
+
+        <label>Subjects passed in 1st semester:</label><br>
+        <input type="number" name="Curricular units 1st sem (approved)" required><br><br>
+
+        <label>Average grade in 1st semester (0–20):</label><br>
+        <input type="number" step="0.1" name="Curricular units 1st sem (grade)" required><br><br>
+
+        <label>Exams attended in 2nd semester:</label><br>
+        <input type="number" name="Curricular units 2nd sem (evaluations)" required><br><br>
+
+        <label>Exams attended in 1st semester:</label><br>
+        <input type="number" name="Curricular units 1st sem (evaluations)" required><br><br>
+
+        <label>Age at enrollment:</label><br>
+        <input type="number" name="Age at enrollment" required><br><br>
+
+        <label>Tuition fees up to date:</label><br>
+        <select name="Tuition fees up to date" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+</body>
+</html>
