@@ -21,7 +21,7 @@
 
         .card {
             background-color: #ffffff;
-            width: 500px;
+            width: 550px;
             padding: 30px 35px;
             border-radius: 8px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -40,6 +40,14 @@
             margin-bottom: 25px;
         }
 
+        h3 {
+            margin-top: 20px;
+            color: #34495e;
+            font-size: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
         label {
             display: block;
             font-size: 14px;
@@ -54,14 +62,8 @@
             font-size: 14px;
             border: 1px solid #ced4da;
             border-radius: 5px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             background-color: #fafafa;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #4a90e2;
-            background-color: #ffffff;
         }
 
         button {
@@ -74,11 +76,6 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #357abd;
         }
 
         .footer {
@@ -91,34 +88,52 @@
 </head>
 
 <body>
-
 <div class="page-wrapper">
     <div class="card">
 
         <h2>Student Dropout Prediction</h2>
-        <div class="subtitle">
-            Academic Performance Based Risk Assessment
-        </div>
+        <div class="subtitle">Academic Performance Based Risk Assessment</div>
 
         <form method="POST">
 
-            <label>Subjects passed in 2nd semester</label>
-            <input type="number" name="Curricular units 2nd sem (approved)" required>
+            <!-- Semester 1 -->
+            <h3>Semester 1 Details</h3>
 
-            <label>Average grade in 2nd semester (0–20)</label>
-            <input type="number" step="0.1" name="Curricular units 2nd sem (grade)" required>
+            <label>Total number of subjects (Semester 1)</label>
+            <input type="number" name="Curricular units 1st sem (enrolled)" required>
 
-            <label>Subjects passed in 1st semester</label>
+            <label>Number of subjects appeared (Semester 1)</label>
+            <input type="number" name="Curricular units 1st sem (evaluations)" required>
+
+            <label>Number of subjects passed (Semester 1)</label>
             <input type="number" name="Curricular units 1st sem (approved)" required>
 
-            <label>Average grade in 1st semester (0–20)</label>
-            <input type="number" step="0.1" name="Curricular units 1st sem (grade)" required>
+            <label>SGPA (Semester 1)</label>
+            <input type="number" step="0.01" name="sgpa_sem1" required>
 
-            <label>Exams attended in 2nd semester</label>
+            <label>Attendance percentage (Semester 1)</label>
+            <input type="number" step="0.1" min="0" max="100">
+
+            <!-- Semester 2 -->
+            <h3>Semester 2 Details</h3>
+
+            <label>Total number of subjects (Semester 2)</label>
+            <input type="number" name="Curricular units 2nd sem (enrolled)" required>
+
+            <label>Number of subjects appeared (Semester 2)</label>
             <input type="number" name="Curricular units 2nd sem (evaluations)" required>
 
-            <label>Exams attended in 1st semester</label>
-            <input type="number" name="Curricular units 1st sem (evaluations)" required>
+            <label>Number of subjects passed (Semester 2)</label>
+            <input type="number" name="Curricular units 2nd sem (approved)" required>
+
+            <label>SGPA (Semester 2)</label>
+            <input type="number" step="0.01" name="sgpa_sem2" required>
+
+            <label>Attendance percentage (Semester 2)</label>
+            <input type="number" step="0.1" min="0" max="100">
+
+            <!-- General -->
+            <h3>General Information</h3>
 
             <label>Age at enrollment</label>
             <input type="number" name="Age at enrollment" required>
@@ -131,15 +146,12 @@
             </select>
 
             <button type="submit">Predict Dropout Risk</button>
-
         </form>
 
         <div class="footer">
             AI & ML Mini Project | Student Analytics System
         </div>
-
     </div>
 </div>
-
 </body>
 </html>
