@@ -13,6 +13,7 @@ model = joblib.load(MODEL_PATH)
 label_encoder = joblib.load(ENCODER_PATH)
 
 FEATURES = [
+<<<<<<< HEAD
     "Curricular units 1st sem (enrolled)",
     "Curricular units 1st sem (evaluations)",
     "Curricular units 1st sem (approved)",
@@ -21,8 +22,19 @@ FEATURES = [
     "Curricular units 2nd sem (evaluations)",
     "Curricular units 2nd sem (approved)",
     "Curricular units 2nd sem (grade)",
+=======
+>>>>>>> 86b138d5fd6e1b97c85df3978e4cbe4e094ae479
     "Age at enrollment",
-    "Tuition fees up to date"
+    "Gender",
+    "Course",
+    "Daytime/evening attendance",
+    "Scholarship holder",
+    "Tuition fees up to date",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "approval_ratio",
+    "evaluation_ratio"
 ]
 
 @app.route("/", methods=["GET", "POST"])
