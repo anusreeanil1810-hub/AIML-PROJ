@@ -10,21 +10,28 @@ from sklearn.metrics import accuracy_score, classification_report
 # Paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_PATH = BASE_DIR / "data" / "student_dropout.csv"
-MODEL_PATH = BASE_DIR / "model_reduced.pkl"
+MODEL_PATH = BASE_DIR / "model.joblib"
+ENCODER_PATH = BASE_DIR / "label_encoder.joblib"
 
 # Load dataset
 df = pd.read_csv(DATA_PATH, sep=None, engine="python")
 
 # Selected features
+df["approval_ratio"] = df["Curricular units 1st sem (approved)"] / df["Curricular units 1st sem (enrolled)"].replace(0, 1)
+df["evaluation_ratio"] = df["Curricular units 1st sem (evaluations)"] / df["Curricular units 1st sem (enrolled)"].replace(0, 1)
+
 FEATURES = [
-    "Curricular units 2nd sem (approved)",
-    "Curricular units 2nd sem (grade)",
-    "Curricular units 1st sem (approved)",
-    "Curricular units 1st sem (grade)",
-    "Curricular units 2nd sem (evaluations)",
-    "Curricular units 1st sem (evaluations)",
     "Age at enrollment",
-    "Tuition fees up to date"
+    "Gender",
+    "Course",
+    "Daytime/evening attendance",
+    "Scholarship holder",
+    "Tuition fees up to date",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "approval_ratio",
+    "evaluation_ratio"
 ]
 
 X = df[FEATURES]
@@ -42,6 +49,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Train model
 model = LogisticRegression(max_iter=2000)
 model.fit(X_train, y_train)
+
+# Save model and encoder
+joblib.dump(model, MODEL_PATH)
+joblib.dump(label_encoder, ENCODER_PATH)
 
 # Evaluate
 y_pred = model.predict(X_test)
