@@ -1,42 +1,64 @@
 from flask import Flask, render_template, request
-import numpy as np
-import joblib  # for loading ML model
+import pandas as pd
+import joblib
 
 app = Flask(__name__)
 
-# Load your trained ML model (replace with your model path)
-# Example: model = joblib.load("model.joblib")
-model = None  # placeholder
+# Load your model and label encoder
+MODEL_PATH = "model_reduced.pkl"
+ENCODER_PATH = "label_encoder.pkl"
+model = joblib.load(MODEL_PATH)
+label_encoder = joblib.load(ENCODER_PATH)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+FEATURES = [
+    "Curricular units 2nd sem (approved)",
+    "Curricular units 2nd sem (grade)",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (grade)",
+    "Curricular units 2nd sem (evaluations)",
+    "Curricular units 1st sem (evaluations)",
+    "Age at enrollment",
+    "Tuition fees up to date"
+]
 
-@app.route('/predict', methods=['POST'])
+# ROUTE FOR PREDICTION FORM
+@app.route("/", methods=["GET", "POST"])
 def predict():
-    if request.method == 'POST':
-        # Get form data
-        s1_total = int(request.form['s1_total'])
-        s1_passed = int(request.form['s1_passed'])
-        s1_sgpa = float(request.form['s1_sgpa'])
-        s2_total = int(request.form['s2_total'])
-        s2_passed = int(request.form['s2_passed'])
-        s2_sgpa = float(request.form['s2_sgpa'])
-        age = int(request.form['age'])
-        tuition = int(request.form['tuition'])
+    if request.method == "POST":
+        # Get form data using the correct HTML names
+        sem1_approved = max(0, int(request.form["sem1_approved"]))
+        sem1_grade_10 = max(0, float(request.form["sem1_grade"]))
+        sem1_eval = max(0, int(request.form["sem1_eval"]))
 
-        # Example feature array for model
-        features = np.array([[s1_total, s1_passed, s1_sgpa,
-                              s2_total, s2_passed, s2_sgpa,
-                              age, tuition]])
+        sem2_approved = max(0, int(request.form["sem2_approved"]))
+        sem2_grade_10 = max(0, float(request.form["sem2_grade"]))
+        sem2_eval = max(0, int(request.form["sem2_eval"]))
 
-        # If you have a trained model, uncomment this:
-        # prediction = model.predict(features)[0]
+        age = max(0, int(request.form["age"]))
+        fees = int(request.form["fees"])
 
-        # Temporary dummy prediction
-        prediction = "High Risk" if s1_sgpa < 5 or s2_sgpa < 5 else "Low Risk"
+        # Convert grades to 20-point scale
+        sem1_grade_20 = sem1_grade_10 * 2
+        sem2_grade_20 = sem2_grade_10 * 2
 
-        return render_template('index.html', prediction=prediction)
+        input_data = [[
+            sem2_approved,
+            sem2_grade_20,
+            sem1_approved,
+            sem1_grade_20,
+            sem2_eval,
+            sem1_eval,
+            age,
+            fees
+        ]]
+        input_df = pd.DataFrame(input_data, columns=FEATURES)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        pred_encoded = model.predict(input_df)[0]
+        prediction = label_encoder.inverse_transform([pred_encoded])[0]
+
+        return render_template("result.html", prediction=prediction)
+
+    return render_template("index.html")  # show the form on GET
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5001, debug=True)

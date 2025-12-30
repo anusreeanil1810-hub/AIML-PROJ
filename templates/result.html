@@ -1,39 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Prediction Result</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, sans-serif;
-            background-color: #f4f6f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<title>Prediction Result</title>
 
-        .card {
-            background-color: #fff;
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            text-align: center;
-            width: 450px;
-        }
+<style>
+:root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #2c3e50;
+    --accent: #4a90e2;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+}
 
-        h2 { color: #2c3e50; margin-bottom: 10px; }
-        p { font-size: 18px; color: #34495e; margin-bottom: 20px; }
-        a { display: inline-block; text-decoration: none; background-color: #4a90e2; color: #fff; padding: 10px 20px; border-radius: 6px; }
-        a:hover { background-color: #0056b3; }
-    </style>
+.dark {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #eaeaea;
+    --accent: #90caf9;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 520px;
+    background: var(--card);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 46px;
+    height: 46px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+/* Result styles */
+.result {
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.success {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--success);
+}
+
+.failure {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--danger);
+}
+
+.info {
+    font-size: 14px;
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 30px;
+    padding: 14px 22px;
+    border-radius: 12px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+</style>
 </head>
+
 <body>
+
+<div class="page-wrapper">
 <div class="card">
-    <h2>Prediction Result</h2>
-    <p>The student is: <strong>{{ prediction }}</strong></p>
-    <a href="/">Back to Form</a>
+
+<div class="theme-toggle" onclick="toggleTheme()">
+    <span id="icon">🌙</span>
 </div>
+
+<h2>Student Dropout Prediction</h2>
+<p class="info">Prediction based on academic performance</p>
+
+{% if prediction == "Dropout" %}
+    <div class="result failure">
+        ❌ Student is at risk of Dropout
+    </div>
+{% else %}
+    <div class="result success">
+        ✅ Student is likely to Graduate
+    </div>
+{% endif %}
+
+<button onclick="window.location.href='/'">
+    Predict Another Student
+</button>
+
+</div>
+</div>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    document.getElementById("icon").textContent = isDark ? "☀️" : "🌙";
+    localStorage.setItem("darkMode", isDark);
+}
+
+// Persist dark mode across pages
+window.onload = () => {
+    if(localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark");
+        document.getElementById("icon").textContent = "☀️";
+    }
+}
+</script>
+
 </body>
 </html>
