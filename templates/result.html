@@ -1,12 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Prediction Result</title>
-</head>
-<body>
-    <h2>Prediction Result</h2>
-    <h3>Student Status: {{ prediction }}</h3>
+<meta charset="UTF-8">
+<title>Prediction Result</title>
 
-    <a href="/">Predict another student</a>
+<style>
+:root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #2c3e50;
+    --accent: #4a90e2;
+}
+
+.dark {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #eaeaea;
+    --accent: #90caf9;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 520px;
+    background: var(--card);
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.result-badge {
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: rgba(74,144,226,0.15);
+    color: var(--accent);
+}
+
+.status {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.info {
+    font-size: 14px;
+    color: #6c757d;
+    margin-top: 15px;
+}
+
+button {
+    margin-top: 30px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+<div class="card">
+
+<div class="theme-toggle" onclick="toggleTheme()">
+    <span id="icon">🌙</span>
+</div>
+
+<h2>Student Dropout Prediction</h2>
+<p class="info">Prediction based on academic performance and enrollment data</p>
+
+<div class="result-badge">
+    Predicted Student Status
+    <div class="status">{{ prediction }}</div>
+</div>
+
+<button onclick="window.location.href='/'">
+    Predict Another Student
+</button>
+
+</div>
+</div>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    document.getElementById("icon").textContent =
+        document.body.classList.contains("dark") ? "☀️" : "🌙";
+}
+</script>
+
 </body>
 </html>
