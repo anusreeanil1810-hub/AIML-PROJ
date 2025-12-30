@@ -7,22 +7,25 @@ app = Flask(__name__)
 
 # Paths
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "model_reduced.pkl"
-ENCODER_PATH = BASE_DIR / "label_encoder.pkl"
+MODEL_PATH = BASE_DIR / "model.joblib"
+ENCODER_PATH = BASE_DIR / "label_encoder.joblib"
 
 # Load model
 model = joblib.load(MODEL_PATH)
 label_encoder = joblib.load(ENCODER_PATH)
 
 FEATURES = [
-    "Curricular units 2nd sem (approved)",
-    "Curricular units 2nd sem (grade)",
-    "Curricular units 1st sem (approved)",
-    "Curricular units 1st sem (grade)",
-    "Curricular units 2nd sem (evaluations)",
-    "Curricular units 1st sem (evaluations)",
     "Age at enrollment",
-    "Tuition fees up to date"
+    "Gender",
+    "Course",
+    "Daytime/evening attendance",
+    "Scholarship holder",
+    "Tuition fees up to date",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "approval_ratio",
+    "evaluation_ratio"
 ]
 
 @app.route("/", methods=["GET", "POST"])
