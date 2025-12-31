@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Prediction Result</title>
+<p class="info">
+    Course: <strong><span id="courseName"></span></strong>
+</p>
+
+<script>
+document.getElementById("courseName").textContent =
+    localStorage.getItem("selectedCourse") || "Not specified";
+</script>
+
 
 <style>
 :root {

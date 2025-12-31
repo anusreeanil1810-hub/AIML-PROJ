@@ -124,6 +124,22 @@ button:hover {
 
 <form method="POST">
 <fieldset>
+    <legend>Course Information</legend>
+
+    <label>Course Selected</label>
+    <select id="courseSelected" required>
+        <option value="" disabled selected>Select Course</option>
+        <option>B.Tech Computer Science</option>
+        <option>B.Tech Information Technology</option>
+        <option>B.Tech Electronics & Communication</option>
+        <option>B.Tech Electrical Engineering</option>
+        <option>B.Sc Data Science</option>
+        <option>BCA</option>
+        <option>MCA</option>
+    </select>
+</fieldset>
+
+<fieldset>
 <legend>Semester 1</legend>
 <label>Subjects passed</label>
 <input type="number" min="0" name="sem1_approved" required>
@@ -185,6 +201,13 @@ document.querySelector(".theme-toggle").addEventListener("click", () => {
     localStorage.setItem("darkMode", isDark);
 });
 </script>
+<script>
+document.querySelector("form").addEventListener("submit", () => {
+    const course = document.getElementById("courseSelected").value;
+    localStorage.setItem("selectedCourse", course);
+});
+</script>
+
 
 </body>
 </html>
